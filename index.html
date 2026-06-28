@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+
+<html>```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Undangan Turun Tanah - Aisha Zahwa Hazika</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Playfair Display (Serif Elegan) & Plus Jakarta Sans (Sans-Serif Bersih) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            peach: {
+              50: '#FFF8F5',
+              100: '#FFEBE3',
+              200: '#FFD3B6',
+              300: '#FFAAA6',
+              400: '#FF8B94',
+            },
+            cream: {
+              50: '#FAF8F5',
+              100: '#F5EFE6',
+              200: '#E8DFD1',
+            },
+            rosegold: {
+              DEFAULT: '#B76E79',
+              light: '#E0B0FF',
+              dark: '#8C4F58'
+            }
+          },
+          animation: {
+            'fade-in-up': 'fadeInUp 1.2s ease-out forwards',
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 4s ease-in-out infinite',
+            'float-delayed': 'float 4s ease-in-out infinite 2s',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FAF8F5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #FFD3B6;
+      border-radius: 10px;
+    }
+    
+    /* Custom styles for animations & layout */
+    .rose-gold-text {
+      background: linear-gradient(135deg, #B76E79 0%, #D4AF37 50%, #B76E79 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .rose-gold-border {
+      border-image: linear-gradient(to right, #B76E79, #E8DFD1, #B76E79) 1;
+    }
+
+    .rose-gold-btn {
+      background: linear-gradient(135deg, #B76E79 0%, #C7828D 100%);
+      box-shadow: 0 4px 15px rgba(183, 110, 121, 0.3);
+    }
+
+    .rose-gold-btn:hover {
+      background: linear-gradient(135deg, #C7828D 0%, #B76E79 100%);
+      transform: translateY(-2px);
+    }
+
+    /* Page container settings for smooth mobile swipe and look */
+    body {
+      background-color: #121212; /* Dark ambient behind the mobile mock frame */
+    }
+
+    .mobile-frame {
+      max-width: 450px;
+      min-height: 100vh;
+      box-shadow: 0 0 40px rgba(0,0,0,0.15);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Glassmorphism details */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body class="flex justify-center items-center min-h-screen">
+
+  <!-- Mobile Frame Container -->
+  <div class="mobile-frame w-full bg-cream-50 flex flex-col justify-between text-neutral-800 relative shadow-2xl">
+    
+    <!-- Flower Petals Canvas Container (Always on top of background) -->
+    <canvas id="petalsCanvas" class="absolute inset-0 pointer-events-none z-10"></canvas>
+
+    <!-- Background Grid Lines & Aesthetic Watercolor Splashes -->
+    <div class="absolute inset-0 opacity-40 pointer-events-none z-0">
+      <div class="absolute top-10 left-10 w-48 h-48 rounded-full bg-peach-100 filter blur-3xl"></div>
+      <div class="absolute bottom-20 right-10 w-60 h-60 rounded-full bg-peach-200 filter blur-3xl"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-cream-100 filter blur-3xl"></div>
+    </div>
+
+    <!-- Music Control Float Button (Visible after cover is opened) -->
+    <button id="musicToggleBtn" class="fixed right-4 bottom-24 z-50 w-10 h-10 rounded-full bg-white/80 backdrop-blur-md shadow-lg flex items-center justify-center border border-peach-200 text-rosegold hidden transition-all duration-300">
+      <i id="musicIcon" class="fa-solid fa-compact-disc animate-spin" style="animation-duration: 4s;"></i>
+    </button>
+
+    <!-- ================== HALAMAN 1: COVER ================== -->
+    <div id="sectionCover" class="relative z-20 flex flex-col justify-between items-center px-6 py-12 min-h-screen text-center transition-all duration-1000 ease-in-out">
+      
+      <!-- Top aesthetic border lines (Clean Minimalist Style) -->
+      <div class="w-full flex flex-col items-center pt-4">
+        <div class="h-[1px] w-1/4 bg-gradient-to-r from-transparent via-rosegold to-transparent my-2"></div>
+      </div>
+
+      <!-- Main Center Content -->
+      <div class="my-auto flex flex-col items-center w-full">
+        <!-- SVG Sleeping Baby & Moon Artwork (Elegant Watercolor Style) -->
+        <div class="w-64 h-64 relative mb-6 animate-float flex justify-center items-center">
+          <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-md">
+            <!-- Warm Soft Moon -->
+            <path d="M130,50 C90,50 60,80 60,120 C60,150 78,175 105,185 C80,180 70,155 70,130 C70,90 100,65 135,65 C145,65 155,68 162,72 C153,58 142,50 130,50 Z" fill="#FFEBE3" opacity="0.95"/>
+            <!-- Outer Glow -->
+            <circle cx="100" cy="110" r="70" fill="url(#goldGradient)" opacity="0.08"/>
+            <!-- Sleeping Baby Silhouette & Clouds -->
+            <g transform="translate(10, 20)">
+              <!-- Clouds at the bottom of moon -->
+              <path d="M50,120 Q65,110 80,120 Q95,110 110,120 Q125,110 140,120 Q150,125 140,135 L50,135 Z" fill="#FFF8F5" opacity="0.9"/>
+              <path d="M65,125 Q78,118 90,125 Q105,118 118,125 Q125,130 110,135 L70,135 Z" fill="#FFEBE3" opacity="0.7"/>
+              <!-- Sleeping Baby Watercolor Outline / Line Art -->
+              <path d="M75,108 C80,105 85,108 88,112 C92,110 96,112 98,115 C101,113 105,115 108,120 C110,123 108,126 102,126 C95,126 88,125 80,122 C75,120 72,115 75,108 Z" fill="#E8DFD1" opacity="0.6"/>
+              <!-- Swaddle wrap baby pinkish -->
+              <path d="M82,113 C86,110 94,113 98,118 C100,121 98,124 92,125 C86,125 81,121 82,113 Z" fill="#FFAAA6" opacity="0.8"/>
+              <!-- Baby head -->
+              <circle cx="78" cy="112" r="6" fill="#F5EFE6"/>
+              <!-- Sleeping eye line -->
+              <path d="M76,112 Q78,114 80,112" stroke="#B76E79" stroke-width="0.8" fill="none"/>
+              <!-- Delicate gold stars -->
+              <path d="M120,50 L122,54 L126,55 L122,56 L120,60 L118,56 L114,55 L118,54 Z" fill="#E8DFD1"/>
+              <path d="M50,70 L51,72 L53,73 L51,74 L50,76 L49,74 L47,73 L49,72 Z" fill="#FFAAA6"/>
+            </g>
+            <defs>
+              <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#B76E79"/>
+                <stop offset="50%" stop-color="#D4AF37"/>
+                <stop offset="100%" stop-color="#B76E79"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <!-- Absolute Soft Watercolor Flowers behind -->
+          <div class="absolute inset-0 border border-dashed border-peach-200/50 rounded-full scale-105 pointer-events-none"></div>
+        </div>
+
+        <h2 class="text-sm uppercase tracking-[0.3em] text-rosegold font-sans font-medium mb-1">Undangan Turun Tanah</h2>
+        <p class="text-xs italic text-neutral-500 font-serif mb-6">(Geutahen Lhee)</p>
+        
+        <h1 class="text-3xl md:text-4xl font-serif text-neutral-800 font-bold mb-4 tracking-wide rose-gold-text px-4">
+          Aisha Zahwa Hazika
+        </h1>
+        
+        <p class="text-xs text-neutral-500 tracking-widest uppercase font-sans mb-10">Putri Tercinta Kami</p>
+      </div>
+
+      <!-- Bottom Interactive Button with Pulse effect -->
+      <div class="w-full px-6">
+        <p class="text-xs text-neutral-400 font-sans mb-3">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+        <div class="mb-6 px-4 py-2 bg-white/50 backdrop-blur-sm rounded-lg border border-peach-100 inline-block mx-auto max-w-xs">
+          <p class="text-sm font-sans font-semibold text-neutral-700" id="recipientName">Tamu Undangan Istimewa</p>
+        </div>
+        <button id="btnOpenInvitation" class="rose-gold-btn text-white w-full py-4 px-6 rounded-full font-sans font-semibold tracking-wider text-sm transition-all duration-300 flex items-center justify-center gap-2 animate-pulse-slow">
+          <i class="fa-solid fa-envelope-open-text"></i> BUKA UNDANGAN
+        </button>
+      </div>
+    </div>
+
+
+    <!-- ================== HALAMAN 2, 3, 4: MAIN CONTENT ================== -->
+    <div id="mainContentArea" class="hidden relative z-20 transition-all duration-1000 ease-in-out opacity-0">
+      
+      <!-- HALAMAN 2: ISI UNDANGAN -->
+      <section id="sectionIsi" class="min-h-screen flex flex-col justify-center items-center px-6 py-16 text-center border-b border-peach-100">
+        <!-- Floating Rose Gold Top Ornament -->
+        <div class="w-12 h-12 mb-8 opacity-80">
+          <svg viewBox="0 0 100 100" class="w-full h-full text-rosegold fill-current">
+            <path d="M50,15 C45,35 25,45 5,50 C25,55 45,65 50,85 C55,65 75,55 95,50 C75,45 55,35 50,15 Z" />
+          </svg>
+        </div>
+
+        <div class="glass-card rounded-2xl px-6 py-10 shadow-lg border border-white/60 w-full animate-fade-in-up">
+          <span class="text-xs tracking-widest text-rosegold uppercase font-sans font-bold">Bismillahirrahmanirrahim</span>
+          <p class="text-sm text-neutral-500 italic font-serif mt-4 mb-6">Assalamu’alaikum Warahmatullahi Wabarakatuh.</p>
+          
+          <p class="text-sm text-neutral-600 leading-relaxed font-sans mb-8">
+            Dengan penuh rasa syukur atas tumbuh kembang putri kami, kami sekeluarga bermaksud mengundang Bapak/Ibu/Saudara/i untuk hadir dalam upacara adat Turun Tanah:
+          </p>
+
+          <!-- Watercolor Highlighted Name -->
+          <div class="relative py-4 my-6">
+            <div class="absolute inset-0 bg-peach-100/50 rounded-3xl filter blur-md transform -skew-y-3"></div>
+            <h3 class="relative text-2xl font-serif font-bold text-neutral-800 rose-gold-text">
+              Aisha Zahwa Hazika
+            </h3>
+          </div>
+
+          <p class="text-xs text-neutral-500 font-sans tracking-wide">
+            Putri dari:<br>
+            <strong class="text-neutral-700 text-sm font-semibold">Bapak Asnawi & Ibu Dewi Rahmah</strong>
+          </p>
+        </div>
+
+        <!-- Mini Flower Garland Illustration -->
+        <div class="mt-8 flex justify-center gap-3 text-peach-300">
+          <i class="fa-solid fa-seedling rotate-45 text-xs"></i>
+          <i class="fa-solid fa-circle text-[6px] my-auto"></i>
+          <i class="fa-solid fa-leaf text-xs"></i>
+          <i class="fa-solid fa-circle text-[6px] my-auto"></i>
+          <i class="fa-solid fa-seedling -rotate-45 text-xs"></i>
+        </div>
+      </section>
+
+      <!-- HALAMAN 3: WAKTU & LOKASI -->
+      <section id="sectionWaktu" class="min-h-screen flex flex-col justify-center items-center px-6 py-16 text-center border-b border-peach-100">
+        <h4 class="text-xs tracking-[0.2em] text-rosegold uppercase font-sans font-bold mb-8">WAKTU & LOKASI</h4>
+
+        <!-- Calendar Widget Glassmorphic -->
+        <div class="glass-card rounded-2xl p-6 shadow-lg border border-white/60 w-full mb-8 relative overflow-hidden">
+          <div class="absolute -top-10 -right-10 w-24 h-24 bg-peach-200/40 rounded-full filter blur-xl"></div>
+          
+          <!-- Month Banner -->
+          <div class="border-b border-neutral-200 pb-4 mb-6">
+            <span class="text-2xl font-serif font-bold text-neutral-800">Juli 2026</span>
+          </div>
+
+          <!-- Calendar Days Grid Mock -->
+          <div class="grid grid-cols-7 gap-2 text-xs font-sans text-neutral-400 mb-6">
+            <div>S</div><div>S</div><div>R</div><div>K</div><div>J</div><div>S</div><div>M</div>
+            <div class="text-neutral-300">29</div><div class="text-neutral-300">30</div><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div>
+            <!-- Highlighted Day -->
+            <div class="bg-rosegold text-white font-bold rounded-full w-7 h-7 flex items-center justify-center mx-auto shadow-md">6</div>
+            <div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div>
+            <div>13</div><div>14</div><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div>
+          </div>
+
+          <!-- Date Detail Text -->
+          <div class="space-y-4">
+            <div class="flex justify-center items-center gap-3 text-neutral-700">
+              <i class="fa-regular fa-calendar-check text-rosegold text-lg"></i>
+              <p class="text-sm font-sans font-medium text-left">
+                <strong>Senin, 6 Juli 2026</strong><br>
+                <span class="text-xs text-neutral-500">Upacara Adat Turun Tanah</span>
+              </p>
+            </div>
+
+            <div class="flex justify-center items-center gap-3 text-neutral-700">
+              <i class="fa-regular fa-clock text-rosegold text-lg"></i>
+              <p class="text-sm font-sans font-medium text-left">
+                <strong>10.00 WIB - Selesai</strong><br>
+                <span class="text-xs text-neutral-500">Waktu Pelaksanaan</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location Widget Glassmorphic -->
+        <div class="glass-card rounded-2xl p-6 shadow-lg border border-white/60 w-full relative overflow-hidden">
+          <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-cream-200/40 rounded-full filter blur-xl"></div>
+          
+          <div class="w-12 h-12 bg-peach-100 rounded-full flex items-center justify-center mx-auto mb-4 text-rosegold text-xl shadow-inner">
+            <i class="fa-solid fa-map-location-dot"></i>
+          </div>
+
+          <h5 class="font-serif font-bold text-neutral-800 text-lg mb-2">Lokasi Acara</h5>
+          <p class="text-xs text-neutral-600 leading-relaxed font-sans mb-6 px-2">
+            Dusun Pendidikan, Desa Seuneubok Baroh, Kec. Darul Aman, Kab. Aceh Timur
+          </p>
+
+          <!-- Action Button: Open Google Maps -->
+          <a href="https://maps.google.com/?q=Dusun+Pendidikan+Desa+Seuneubok+Baroh+Aceh+Timur" target="_blank" class="rose-gold-btn inline-flex items-center gap-2 text-white text-xs font-semibold py-3 px-6 rounded-full shadow-md transition-all">
+            <i class="fa-solid fa-location-arrow"></i> PETUNJUK LOKASI (GOOGLE MAPS)
+          </a>
+        </div>
+      </section>
+
+      <!-- HALAMAN 4: PENUTUP & RSVP -->
+      <section id="sectionPenutup" class="min-h-screen flex flex-col justify-center items-center px-6 py-16 text-center">
+        
+        <!-- Watercolor Illustration: Baby Feet / Grass Frame -->
+        <div class="w-48 h-48 relative mb-8 flex justify-center items-center">
+          <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-sm">
+            <circle cx="100" cy="100" r="80" fill="#FFF8F5" stroke="#FFD3B6" stroke-width="1" stroke-dasharray="4 4"/>
+            <!-- Floral watercolor frame -->
+            <path d="M40,140 Q100,180 160,140" fill="none" stroke="#B76E79" stroke-width="2" opacity="0.6"/>
+            <!-- Tiny flower shapes -->
+            <circle cx="60" cy="155" r="4" fill="#FFAAA6"/>
+            <circle cx="140" cy="155" r="4" fill="#FFAAA6"/>
+            <circle cx="100" cy="165" r="5" fill="#FFEBE3"/>
+            <!-- Tiny Baby feet lineart -->
+            <g transform="translate(75, 60)" stroke="#B76E79" stroke-width="2" fill="none" stroke-linecap="round">
+              <!-- Left Foot -->
+              <path d="M15,50 C12,45 10,35 15,25 C18,20 22,25 24,35 C25,45 22,48 15,50 Z" />
+              <!-- Toes Left -->
+              <circle cx="17" cy="17" r="2.5" fill="#B76E79" stroke="none"/>
+              <circle cx="23" cy="19" r="2" fill="#B76E79" stroke="none"/>
+              <circle cx="28" cy="22" r="1.5" fill="#B76E79" stroke="none"/>
+              <circle cx="31" cy="26" r="1.5" fill="#B76E79" stroke="none"/>
+              <circle cx="33" cy="31" r="1" fill="#B76E79" stroke="none"/>
+
+              <!-- Right Foot -->
+              <path d="M35,50 C38,45 40,35 35,25 C32,20 28,25 26,35 C25,45 28,48 35,50 Z" />
+              <!-- Toes Right -->
+              <circle cx="33" cy="17" r="2.5" fill="#B76E79" stroke="none"/>
+              <circle cx="27" cy="19" r="2" fill="#B76E79" stroke="none"/>
+              <circle cx="22" cy="22" r="1.5" fill="#B76E79" stroke="none"/>
+              <circle cx="19" cy="26" r="1.5" fill="#B76E79" stroke="none"/>
+              <circle cx="17" cy="31" r="1" fill="#B76E79" stroke="none"/>
+            </g>
+          </svg>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 shadow-lg border border-white/60 w-full mb-8">
+          <p class="text-sm text-neutral-600 leading-relaxed font-sans mb-6">
+            Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu bagi langkah pertama putri kami.
+          </p>
+
+          <p class="text-sm text-neutral-500 italic font-serif mb-6">Wassalamu’alaikum Warahmatullahi Wabarakatuh.</p>
+
+          <p class="text-xs text-neutral-400 font-sans uppercase tracking-widest mb-1">Kami yang berbahagia,</p>
+          <p class="font-serif font-bold text-neutral-800 text-base">Keluarga Bapak Asnawi & Ibu Dewi Rahmah</p>
+        </div>
+
+        <!-- RSVP Form Section -->
+        <div class="glass-card rounded-2xl p-6 shadow-lg border border-white/60 w-full text-left mb-8">
+          <h5 class="font-serif font-bold text-neutral-800 text-lg mb-4 text-center">Konfirmasi Kehadiran (RSVP)</h5>
+          
+          <form id="rsvpForm" class="space-y-4">
+            <div>
+              <label class="block text-xs font-sans font-semibold text-neutral-500 mb-1" for="rsvpName">Nama Tamu</label>
+              <input type="text" id="rsvpName" required class="w-full px-4 py-3 bg-white/80 border border-peach-200 rounded-lg text-sm font-sans focus:outline-none focus:ring-2 focus:ring-rosegold/50" placeholder="Masukkan nama Anda">
+            </div>
+
+            <div>
+              <label class="block text-xs font-sans font-semibold text-neutral-500 mb-1">Status Kehadiran</label>
+              <div class="grid grid-cols-2 gap-3 mt-1">
+                <label class="flex items-center justify-center gap-2 py-3 bg-white/80 border border-peach-200 rounded-lg text-sm font-sans cursor-pointer hover:bg-peach-50 transition-all" id="labelHadir">
+                  <input type="radio" name="attendance" value="Hadir" required class="accent-rosegold">
+                  <span>Hadir</span>
+                </label>
+                <label class="flex items-center justify-center gap-2 py-3 bg-white/80 border border-peach-200 rounded-lg text-sm font-sans cursor-pointer hover:bg-peach-50 transition-all" id="labelTidakHadir">
+                  <input type="radio" name="attendance" value="Tidak Hadir" required class="accent-rosegold">
+                  <span>Tidak Hadir</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-sans font-semibold text-neutral-500 mb-1" for="rsvpWishes">Ucapan & Doa Restu</label>
+              <textarea id="rsvpWishes" rows="3" required class="w-full px-4 py-3 bg-white/80 border border-peach-200 rounded-lg text-sm font-sans focus:outline-none focus:ring-2 focus:ring-rosegold/50" placeholder="Tulis doa restu Anda untuk Aisha..."></textarea>
+            </div>
+
+            <button type="submit" class="rose-gold-btn text-white w-full py-3 rounded-lg font-sans font-bold text-sm tracking-wide transition-all shadow-md">
+              Kirim Konfirmasi & Doa
+            </button>
+          </form>
+        </div>
+
+        <!-- Signature Footer -->
+        <div class="mt-12 text-center text-[10px] text-neutral-400 font-sans tracking-widest uppercase">
+          Made with ♥ for Aisha Zahwa Hazika
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+
+  <!-- Sound Synthesis & Animation Javascript logic -->
+  <script>
+    // --- Web Audio API Synth for "You Are My Sunshine" (Melody) ---
+    let audioCtx = null;
+    let isPlaying = false;
+    let melodyTimeout = null;
+    let currentNoteIndex = 0;
+
+    // You Are My Sunshine (Key of C major - Music Box Synthesizer feel)
+    // Format: [noteName, duration (in beats)]
+    const melody = [
+      ['G4', 0.5], ['C5', 0.5], ['D5', 0.5], 
+      ['E5', 1.0], ['E5', 1.0], // "You are my"
+      ['E5', 0.5], ['D5', 0.5], ['E5', 0.5], ['C5', 1.0], ['C5', 1.0], // "sun-shine, my on-ly"
+      ['C5', 0.5], ['D5', 0.5], ['E5', 0.5], ['F5', 1.0], ['A5', 1.0], // "sun-shine, you make me"
+      ['A5', 0.5], ['G5', 0.5], ['F5', 0.5], ['E5', 1.5], // "hap-py when skies are"
+      ['C5', 1.0], // "gray"
+      ['C5', 0.5], ['D5', 0.5], ['E5', 0.5], ['F5', 1.0], ['A5', 1.0], // "you'll ne-ver know, dear,"
+      ['A5', 0.5], ['G5', 0.5], ['F5', 0.5], ['E5', 1.0], ['C5', 1.0], // "how much I love you"
+      ['C5', 0.5], ['D5', 0.5], ['E5', 0.5], ['F5', 1.0], ['D5', 1.0], // "please don't take my"
+      ['D5', 0.5], ['E5', 0.5], ['C5', 1.5], // "sun-shine a-way"
+      ['REST', 1.5]
+    ];
+
+    const noteFrequencies = {
+      'G4': 392.00, 'C5': 523.25, 'D5': 587.33, 'E5': 659.25,
+      'F5': 698.46, 'G5': 783.99, 'A5': 880.00, 'REST': 0
+    };
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playMusicBoxNote(freq, duration) {
+      if (!audioCtx || freq === 0) return;
+
+      const osc = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      
+      // Music Box Sound Design: Triangle wave + Sine wave mix for rich, sweet warmth
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+      // Simple soft chime/bell envelope (immediate attack, long decaying release)
+      gainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration * 1.8);
+
+      // Lowpass filter to smooth the edges
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(1400, audioCtx.currentTime);
+
+      osc.connect(filter);
+      filter.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration * 2.0);
+    }
+
+    function playMelodyLoop() {
+      if (!isPlaying) return;
+
+      const tempo = 110; // BPM
+      const beatDuration = 60 / tempo;
+      
+      const currentNote = melody[currentNoteIndex];
+      const noteName = currentNote[0];
+      const duration = currentNote[1] * beatDuration;
+      const freq = noteFrequencies[noteName];
+
+      if (noteName !== 'REST') {
+        playMusicBoxNote(freq, duration);
+      }
+
+      currentNoteIndex = (currentNoteIndex + 1) % melody.length;
+      melodyTimeout = setTimeout(playMelodyLoop, duration * 1000);
+    }
+
+    function toggleMusic() {
+      initAudio();
+      const musicIcon = document.getElementById('musicIcon');
+      
+      if (isPlaying) {
+        isPlaying = false;
+        clearTimeout(melodyTimeout);
+        musicIcon.classList.remove('animate-spin');
+      } else {
+        isPlaying = true;
+        // Resume context if suspended
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        playMelodyLoop();
+        musicIcon.classList.add('animate-spin');
+      }
+    }
+
+    // --- Dynamic Flower Petals Fall on Canvas ---
+    const canvas = document.getElementById('petalsCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let petals = [];
+    const maxPetals = 25;
+
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+
+    class Petal {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * -canvas.height;
+        this.size = Math.random() * 8 + 6;
+        this.speedY = Math.random() * 1.2 + 0.8;
+        this.speedX = Math.random() * 0.8 - 0.4;
+        this.angle = Math.random() * 360;
+        this.angleSpeed = Math.random() * 1.5 - 0.75;
+        this.opacity = Math.random() * 0.4 + 0.5;
+      }
+
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        this.angle += this.angleSpeed;
+
+        if (this.y > canvas.height) {
+          this.y = -20;
+          this.x = Math.random() * canvas.width;
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.angle * Math.PI) / 180);
+        ctx.beginPath();
+        
+        // Draw soft peach petal shape using quadratic curves
+        ctx.fillStyle = `rgba(255, 170, 166, ${this.opacity})`;
+        ctx.strokeStyle = `rgba(255, 211, 182, ${this.opacity * 0.5})`;
+        ctx.lineWidth = 1;
+        
+        ctx.moveTo(0, 0);
+        ctx.quadraticCurveTo(-this.size, -this.size / 2, -this.size / 2, -this.size);
+        ctx.quadraticCurveTo(0, -this.size * 1.5, this.size / 2, -this.size);
+        ctx.quadraticCurveTo(this.size, -this.size / 2, 0, 0);
+        
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    function initPetals() {
+      petals = [];
+      for (let i = 0; i < maxPetals; i++) {
+        petals.push(new Petal());
+      }
+    }
+
+    function animatePetals() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      petals.forEach(petal => {
+        petal.update();
+        petal.draw();
+      });
+      requestAnimationFrame(animatePetals);
+    }
+
+    // --- Interactive Page Controls & Events ---
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set Recipient name from URL Query String if present (e.g. ?to=Budi)
+      const urlParams = new URLSearchParams(window.location.search);
+      const toName = urlParams.get('to');
+      if (toName) {
+        document.getElementById('recipientName').innerText = decodeURIComponent(toName);
+      }
+
+      // Initialize Canvas
+      resizeCanvas();
+      initPetals();
+      animatePetals();
+      window.addEventListener('resize', resizeCanvas);
+
+      // Open Invitation Event
+      const btnOpenInvitation = document.getElementById('btnOpenInvitation');
+      const sectionCover = document.getElementById('sectionCover');
+      const mainContentArea = document.getElementById('mainContentArea');
+      const musicToggleBtn = document.getElementById('musicToggleBtn');
+
+      btnOpenInvitation.addEventListener('click', () => {
+        // Play sweet greeting sound loop immediately
+        isPlaying = true;
+        initAudio();
+        playMelodyLoop();
+
+        // Smoothly fade out cover
+        sectionCover.classList.add('opacity-0', 'scale-95');
+        setTimeout(() => {
+          sectionCover.classList.add('hidden');
+          
+          // Smoothly reveal main content
+          mainContentArea.classList.remove('hidden');
+          setTimeout(() => {
+            mainContentArea.classList.add('opacity-100');
+            // Trigger scroll/animation refresh
+            resizeCanvas();
+            musicToggleBtn.classList.remove('hidden');
+          }, 50);
+
+        }, 1000);
+      });
+
+      // Music float toggle trigger
+      musicToggleBtn.addEventListener('click', toggleMusic);
+
+      // RSVP Form submission handler (In-Memory with toast notice)
+      const rsvpForm = document.getElementById('rsvpForm');
+
+      rsvpForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Reset form
+        rsvpForm.reset();
+        
+        // Create subtle floating notification toast
+        const toast = document.createElement('div');
+        toast.className = "fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-rosegold text-white text-xs font-sans font-bold px-6 py-3 rounded-full shadow-lg z-50 transition-opacity duration-500";
+        toast.innerText = "Terima kasih atas konfirmasi Anda!";
+        document.body.appendChild(toast);
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          setTimeout(() => toast.remove(), 500);
+        }, 3000);
+      });
+    });
+  </script>
+</body>
+</html>
+
+```
+
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="styles/style.css"/>
+  <title>Hello, World!</title>
+</head>
+<body>
+  <h1>
+    Hello, World!
+  </h1>
+</body>
+</html>
